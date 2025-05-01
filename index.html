@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentiment Analysis</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 20px;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 25px 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+      }
+
+      textarea {
+        height: 120px;
+        width: 90%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        resize: none;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 10px 25px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .result {
+        margin-top: 30px;
+        text-align: center;
+        max-width: 600px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .error {
+        color: red;
+        margin-top: 10px;
+      }
+
+      .sentiment-positive {
+        color: green;
+        font-weight: bold;
+      }
+
+      .sentiment-neutral {
+        color: #999;
+        font-weight: bold;
+      }
+
+      .sentiment-negative {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Amazon Product Review Sentiment Analyzer</h1>
+
+    <form action="/predict" method="POST">
+      <textarea
+        name="review"
+        placeholder="Enter your product review..."
+        required
+      ></textarea>
+      <br />
+      <button type="submit">Analyze Sentiment</button>
+    </form>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if sentiment %}
+      <div class="result">
+        <h2>Review:</h2>
+        <p>{{ review }}</p>
+
+        <h2>Sentiment:</h2>
+        <p class="
+          {% if sentiment == 'Positive' %}
+            sentiment-positive
+          {% elif sentiment == 'Neutral' %}
+            sentiment-neutral
+          {% else %}
+            sentiment-negative
+          {% endif %}
+        ">
+          {{ sentiment }} (Confidence: {{ score }})
+        </p>
+      </div>
+    {% endif %}
+  </body>
+</html>
